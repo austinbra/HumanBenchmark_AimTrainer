@@ -2,23 +2,19 @@ import pyautogui
 import time
 
 target = (149, 195, 232)
-target2 = (255, 255, 255)
 ops = (43, 135, 209)
+yel = (255,209,84)
 screenshot = None
-count = 0
-
 
 def checkColor(x, y):
     global screenshot
     if screenshot is None:
         screenshot = pyautogui.screenshot()
     pixel_color = screenshot.getpixel((x, y))
-    if pixel_color != ops:
+    if pixel_color != ops and pixel_color != yel:
         screenshot = None  # Reset the screenshot after click
         return True
     return False
-    #print(pixel_color)
-
 
 def grid(rows, cols, col_step_size, row_step_size):
     for row in range(5, rows + 4):
@@ -26,7 +22,6 @@ def grid(rows, cols, col_step_size, row_step_size):
             x = col * col_step_size
             y = row * row_step_size
             if checkColor(int(x), int(y)):
-                pyautogui.moveTo(x, y)
                 pyautogui.click(x, y)
                 return True
     return False
@@ -41,11 +36,11 @@ grid_cols = 35
 col_step_size = 100  # Adjust this based on your preference
 row_step_size = 100
 
-# Call the function to move the mouse in a grid pattern
+# Calls the function to click on the blue pixel of the target
 start = time.time()
 end = start + 5
+print('Code is Running')
 pyautogui.click(screen_width/2, (screen_height*3)/7)
 while time.time() < end:
     grid(grid_rows, grid_cols, col_step_size, row_step_size)
-    #count += 1
-
+print('Stopped')
